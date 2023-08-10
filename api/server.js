@@ -7,6 +7,8 @@ const PORT = 8000;
 
 const prisma = new PrismaClient();
 
+app.use(express.json());
+
 app.post("/api/auth/register",async(req,res)=>{
     const {username, email, password} = req.body;
     const hashedpassword = await bcrypt.hash(password,10);
