@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require("dotenv").config;
 
 const PORT = 8000;
 
@@ -38,7 +40,10 @@ app.post("/api/auth/login",async (req,res)=>{
         return res.status(401).json({erorr:"そのパスワードは間違っています"});
     }
 
-    
+    const token = jwt.sign({id: user.id},process.env.SECRET_KEY,{
+        expiresIn:"1d",
+    })
+    return res.json({token});
 })
 
 app.listen(PORT, ()=>console.log(`server is runing on Port ${PORT}`));
