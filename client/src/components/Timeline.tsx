@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Post from './Post'
 import apiClient from '@/lib/apiClient'
 import { PostType } from '@/types';
@@ -19,6 +19,19 @@ const Timeline = () => {
             alert("ログインしてください。")
         }
     }
+
+    useEffect(() => {
+        const fetchLatestPosts = async () => {
+            try {
+                const response = await apiClient.get("/posts/get_latest_post");
+                setLatestPosts(response.data)
+
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchLatestPosts();
+    }, [])
     return (
         <div className="min-h-screen bg-gray-100">
             <main className="container mx-auto py-4">
