@@ -25,14 +25,6 @@ router.post("/post",async(req,res)=>{
         console.log(err);
         return res.status(500).json({message:"サーバーエラーです。"});1
     }
-    const user = await prisma.user.create({
-        data:{
-            username,
-            email,
-            password: hashedpassword,
-        },
-    });
-    return res.json({user});
 })
 
 // router.post("/login",async (req,res)=>{
