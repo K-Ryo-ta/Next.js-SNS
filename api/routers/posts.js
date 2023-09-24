@@ -2,11 +2,12 @@ const router = require("express").Router();
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const isAuthenticated = require("../middlewares/isAuthenticated");
 require("dotenv").config;
 
 const prisma = new PrismaClient();
 
-router.post("/post",async(req,res)=>{
+router.post("/post",isAuthenticated,async(req,res)=>{
     const { content } = req.body;
     if(!content){
         return res.status(400).json({message:"投稿内容がありません"});
@@ -16,7 +17,7 @@ router.post("/post",async(req,res)=>{
         const newPost = await prisma.post.create({
             data:{
                 content,
-                authorId: 1,
+                authorId: req.userId,
             },
             include:{
                 author:true,
