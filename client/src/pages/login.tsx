@@ -18,7 +18,6 @@ const Login = () => {
                 password,
             });
             const token = response.data.token
-            console.log(token);
             router.push("/");
         } catch (err) {
             alert("入力内容が正しくありません")
