@@ -16,13 +16,13 @@ const Authcontext = React.createContext<AuthContextType>({
 });
 
 export const useAuth = () => {
-    return React.useContext(Authcontext);
+    return useContext(Authcontext);
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-    const token = localStorage.getItem("auth_token");
 
     useEffect(() => {
+        const token = localStorage.getItem("auth_token");
         apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
     }, []);
 
